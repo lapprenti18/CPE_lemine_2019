@@ -65,6 +65,10 @@ int start(lemin_t *lemin)
         add_node_at_back(i, &list);
     }
 
+    // for (list; list; list = list->next) {
+    //     add_node_at_back()
+    // }
+
     node_t *cp = list;
 
     for (; cp; cp = cp->next) {

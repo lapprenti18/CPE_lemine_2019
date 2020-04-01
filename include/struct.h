@@ -10,7 +10,9 @@
 
 typedef struct node_s
 {
-    int data;
+    void *data;
+    int x;
+    int y;
     struct node_s *neighbourg;
     struct node_s *next;
 } node_t;
