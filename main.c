@@ -33,27 +33,8 @@ int find_bigger(lemin_t *lemin)
 
 int parser(lemin_t *lemin, char *str)
 {
-    int i = 0;
-    int j = 0;
-    char *tmp = malloc(sizeof(char) * my_strlen(str));
 
-    for (; str[i + 1] != '-' && str[i + 1] != 0; i++);
-    for (; str[i] != 0; i++) {
-        if (str[i] >= '0' && str[i] <= '9') {
-            tmp[j] = str[i];
-            j++;
-        } else if (str[i] == '-') {
-            tmp[j] = '-';
-            j++;
-        } else {
-            tmp[j] = '-';
-            j++;
-        }
-    }
-    tmp[j] = 0;
-    lemin->tab = my_str_to_word_array(tmp, '-');
-
-    free(tmp);
+    lemin->tab = my_str_to_word_array(str, '\n');
     return (0);
 }
 
@@ -89,9 +70,15 @@ int main(void)
 
     if (check_error(buffer) == 1)
         return (84);
-    parser(&lemin, buffer);
-    find_bigger(&lemin);
-    start(&lemin);
-    my_free(&lemin, buffer);
+    lemin.tab = my_str_to_word_array(buffer, '\n');
+    for (int a = 0; lemin.tab[a]; a++) {
+        if (lemin.tab[a][0] == '#' && lemin.tab[a][1] != '#')
+            lemin.tab[a][0] = '\0';
+    }
+    for (int a = 0; lemin.tab[a]; a++)
+        printf("%s\n", lemin.tab[a]);
+    // find_bigger(&lemin);
+    // start(&lemin);
+    // my_free(&lemin, buffer);
     return (0);
 }
