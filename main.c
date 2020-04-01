@@ -33,30 +33,16 @@ int find_bigger(lemin_t *lemin)
 
 int parser(lemin_t *lemin, char *str)
 {
-
     lemin->tab = my_str_to_word_array(str, '\n');
     return (0);
 }
 
-int start(lemin_t *lemin)
+int tab_len(char **tab)
 {
-    node_t *list = NULL;
+    int i = 0;
 
-    for (int i = 0; i <= find_bigger(lemin); i++) {
-        add_node_at_back(i, &list);
-    }
-
-    // for (list; list; list = list->next) {
-    //     add_node_at_back()
-    // }
-
-    node_t *cp = list;
-
-    for (; cp; cp = cp->next) {
-        printf("%d\n", cp->data);
-    }
-
-    return (0);
+    for (; tab[i]; i += 1);
+    return (i);
 }
 
 void my_free(lemin_t *lemin, char *str)
@@ -67,10 +53,49 @@ void my_free(lemin_t *lemin, char *str)
     free(str);
 }
 
+void add_node_at_back(char *line, node_t **node)
+{
+    node_t *new = malloc(sizeof(node_t));
+    node_t *tmp = *node;
+    char **tab = my_str_to_word_array(line, ' ');
+
+    new->start = NULL;
+    new->end = NULL;
+    new->next = NULL;
+    new->name = tab[0];
+    new->x = my_getnbr(tab[1]);
+    new->y = my_getnbr(tab[2]);
+    if (*node == NULL) {
+        *node = new;
+        return;
+    }
+    while (tmp->next != NULL) {
+        tmp = tmp->next;
+    }
+    tmp->next = new;
+}
+
+void create_rooms(char **tab, node_t *head)
+{
+    node_t *tmp = head;
+
+    for (int i = 0; tab[i]; i += 1) {
+        if (tab_len(my_str_to_word_array(tab[i], ' ')) == 3) {
+            if (i > 0 && my_strcmp(tab[i - 1], "##start") == 0)
+                add_node_at_back(tab[i], &head->start);
+            else if (i > 0 && my_strcmp(tab[i - 1], "##end") == 0)
+                add_node_at_back(tab[i], &head->end);
+            else
+                add_node_at_back(tab[i], &head);
+        }
+    }
+}
+
 int main(void)
 {
     lemin_t lemin;
     char *buffer = get_file();
+    node_t *head = NULL;
 
     if (check_error(buffer) == 1)
         return (84);
@@ -79,8 +104,7 @@ int main(void)
         if (lemin.tab[a][0] == '#' && lemin.tab[a][1] != '#')
             lemin.tab[a][0] = '\0';
     }
-    for (int a = 0; lemin.tab[a]; a++)
-        printf("%s\n", lemin.tab[a]);
+    create_rooms(lemin.tab, head);
     // find_bigger(&lemin);
     // start(&lemin);
     // my_free(&lemin, buffer);

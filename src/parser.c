@@ -7,7 +7,7 @@
 
 #include "../include/my.h"
 
-char *my_parser(char *tunnel, char *string)
+char *my_check(char *tunnel, char *string)
 {
     char **tmp = NULL;
     char *nb1 = NULL;

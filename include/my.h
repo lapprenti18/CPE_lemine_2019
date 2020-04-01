@@ -28,6 +28,7 @@ void my_printf(char *str, ...);
 int my_getnbr(char const *str);
 int my_strcmp(char const *s1, char const *s2);
 void add_node_at_front(int value, node_t **node);
-void add_node_at_back(int value, node_t **node);
+void add_node_at_back(char *line, node_t **node);
+char *my_check(char *tunnel, char *string);
 
 #endif /* !MY_H_ */

@@ -10,9 +10,11 @@
 
 typedef struct node_s
 {
-    void *data;
+    char *name;
     int x;
     int y;
+    struct node_s *start;
+    struct node_s *end;
     struct node_s *neighbourg;
     struct node_s *next;
 } node_t;
