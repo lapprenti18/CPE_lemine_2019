@@ -1,3 +1,10 @@
+/*
+** EPITECH PROJECT, 2020
+** parser.c
+** File description:
+** parser.c
+*/
+
 #include "include/my.h"
 #include "include/struct.h"
 
@@ -10,12 +17,15 @@ char *get_file(void)
     while (getline(&buffer, &len, stdin) != -1) {
         final = my_strcat(final, buffer);
     }
+    if (final == NULL)
+        return (NULL);
     return (final);
 }
 
 int check_error(char *str)
 {
-    (void)str;
+    if (str == NULL)
+        return (1);
     return (0);
 }
 
@@ -31,42 +41,15 @@ int find_bigger(lemin_t *lemin)
     return (max);
 }
 
-int parser(lemin_t *lemin, char *str)
+void add_neighbour(neigh_t **head, char *room)
 {
-    lemin->tab = my_str_to_word_array(str, '\n');
-    return (0);
-}
+    neigh_t *new = malloc(sizeof(neigh_t));
+    neigh_t *tmp = *head;
 
-int tab_len(char **tab)
-{
-    int i = 0;
-
-    for (; tab[i]; i += 1);
-    return (i);
-}
-
-void my_free(lemin_t *lemin, char *str)
-{
-    for (int i = 0; lemin->tab[i] != NULL; i++) {
-        free(lemin->tab[i]);
-    }
-    free(str);
-}
-
-void add_node_at_back(char *line, node_t **node)
-{
-    node_t *new = malloc(sizeof(node_t));
-    node_t *tmp = *node;
-    char **tab = my_str_to_word_array(line, ' ');
-
-    new->start = NULL;
-    new->end = NULL;
     new->next = NULL;
-    new->name = tab[0];
-    new->x = my_getnbr(tab[1]);
-    new->y = my_getnbr(tab[2]);
-    if (*node == NULL) {
-        *node = new;
+    new->name = room;
+    if (*head == NULL) {
+        *head = new;
         return;
     }
     while (tmp->next != NULL) {
@@ -75,36 +58,25 @@ void add_node_at_back(char *line, node_t **node)
     tmp->next = new;
 }
 
-void create_rooms(char **tab, node_t *head)
-{
-    node_t *tmp = head;
-
-    for (int i = 0; tab[i]; i += 1) {
-        if (tab_len(my_str_to_word_array(tab[i], ' ')) == 3) {
-            if (i > 0 && my_strcmp(tab[i - 1], "##start") == 0)
-                add_node_at_back(tab[i], &head->start);
-            else if (i > 0 && my_strcmp(tab[i - 1], "##end") == 0)
-                add_node_at_back(tab[i], &head->end);
-            else
-                add_node_at_back(tab[i], &head);
-        }
-    }
-}
-
 int main(void)
 {
     lemin_t lemin;
     char *buffer = get_file();
     node_t *head = NULL;
 
-    if (check_error(buffer) == 1)
+    if (check_error(buffer) == 1) {
+        free(buffer);
         return (84);
+    }
     lemin.tab = my_str_to_word_array(buffer, '\n');
     for (int a = 0; lemin.tab[a]; a++) {
-        if (lemin.tab[a][0] == '#' && lemin.tab[a][1] != '#')
+        if (my_strlen(lemin.tab[a]) > 1 && lemin.tab[a][0] == '#' && lemin.tab[a][1] != '#')
             lemin.tab[a][0] = '\0';
     }
     create_rooms(lemin.tab, head);
+    get_nb_of_ants(&lemin, buffer);
+    my_printf("#number_of_ants\n%d\n", lemin.nb_of_ants);
+    my_free(&lemin, buffer);
     // find_bigger(&lemin);
     // start(&lemin);
     // my_free(&lemin, buffer);

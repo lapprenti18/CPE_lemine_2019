@@ -29,6 +29,13 @@ int my_getnbr(char const *str);
 int my_strcmp(char const *s1, char const *s2);
 void add_node_at_front(int value, node_t **node);
 void add_node_at_back(char *line, node_t **node);
-char *my_check(char *tunnel, char *string);
+char *my_check(char **tunnels, char *string);
+void get_nb_of_ants(lemin_t *lemin, char *string);
+void add_node_at_back(char *line, node_t **node);
+void my_free(lemin_t *lemin, char *str);
+void create_rooms(char **tab, node_t *head);
+node_t *get_room(node_t *head, char *to_find);
+int tab_len(char **tab);
+int parser(lemin_t *lemin, char *str);
 
 #endif /* !MY_H_ */
