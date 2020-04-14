@@ -41,31 +41,16 @@ int find_bigger(lemin_t *lemin)
     return (max);
 }
 
-void add_neighbour(neigh_t **head, char *room)
-{
-    neigh_t *new = malloc(sizeof(neigh_t));
-    neigh_t *tmp = *head;
-
-    new->next = NULL;
-    new->name = room;
-    if (*head == NULL) {
-        *head = new;
-        return;
-    }
-    while (tmp->next != NULL) {
-        tmp = tmp->next;
-    }
-    tmp->next = new;
-}
-
 void print_tunnels(char *tab[])
 {
-    my_printf("#tunnels\n");
     int i = 0;
 
+    my_printf("#tunnels\n");
     for (; tab[i] != NULL && i < 1; i++);
     for (; tab[i] != NULL && tab[i][0] != 0 && tab[i][1] != 0 && tab[i][1] != '-'; i++);
-    for (; tab[i] != NULL && tab[i][0] != 0 && (tab[i][1] != 0 && tab[i][1] == '-'); i++) {
+    for (; tab[i] != NULL; i++) {
+        if (!tab[i][0] || tab[i][0] == '#')
+            continue;
         my_printf("%s\n", tab[i]);
     }
 }
@@ -75,6 +60,7 @@ int main(void)
     lemin_t lemin;
     char *buffer = get_file();
     node_t *head = NULL;
+    node_t *start = NULL;
 
     if (check_error(buffer) == 1) {
         free(buffer);
@@ -83,19 +69,15 @@ int main(void)
     get_nb_of_ants(&lemin, buffer);
     my_printf("#number_of_ants\n%d\n", lemin.nb_of_ants);
     lemin.tab = my_str_to_word_array(buffer, '\n');
-    print_tunnels(lemin.tab);
     for (int a = 0; lemin.tab[a]; a++) {
         if (my_strlen(lemin.tab[a]) > 1 && lemin.tab[a][0] == '#' && lemin.tab[a][1] != '#')
             lemin.tab[a][0] = '\0';
     }
-    create_rooms(lemin.tab, head);
     head = create_rooms(lemin.tab, head);
-    // get_nb_of_ants(&lemin, buffer);
-    // my_printf("#number_of_ants\n%d\n", lemin.nb_of_ants);
-    my_free(&lemin, buffer);
     print_rooms(head);
-    // find_bigger(&lemin);
-    // start(&lemin);
-    // my_free(&lemin, buffer);
+    print_tunnels(my_str_to_word_array(buffer, '\n'));
+    start = get_room(head, head->start->name);
+    fill_neigh(&start, 0);
+    my_free(&lemin, buffer);
     return (0);
 }

@@ -8,22 +8,25 @@
 #ifndef STRUCT_H_
 #define STRUCT_H_
 
-typedef struct neigh_s
-{
-    char *name;
-    struct neigh_s *next;
-} neigh_t;
+typedef struct neigh_s neigh_t;
 
 typedef struct node_s
 {
     char *name;
     int x;
     int y;
+    int distance;
     struct node_s *start;
     struct node_s *end;
     neigh_t *neighbourg;
     struct node_s *next;
 } node_t;
+
+struct neigh_s
+{
+    node_t *node;
+    struct neigh_s *next;
+};
 
 typedef struct lemin_s
 {

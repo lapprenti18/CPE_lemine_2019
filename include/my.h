@@ -37,5 +37,6 @@ node_t *create_rooms(char **tab, node_t *head);
 node_t *get_room(node_t *head, char *to_find);
 int tab_len(char **tab);
 int parser(lemin_t *lemin, char *str);
+void fill_neigh(node_t **head, int distance);
 
 #endif /* !MY_H_ */

@@ -29,6 +29,7 @@ void add_node_at_back(char *line, node_t **node)
     new->start = NULL;
     new->end = NULL;
     new->next = NULL;
+    new->distance = __INT_MAX__;
     new->name = tab[0];
     new->neighbourg = NULL;
     new->x = my_getnbr(tab[1]);
