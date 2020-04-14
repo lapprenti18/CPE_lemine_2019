@@ -58,6 +58,18 @@ void add_neighbour(neigh_t **head, char *room)
     tmp->next = new;
 }
 
+void print_tunnels(char *tab[])
+{
+    my_printf("#tunnels\n");
+    int i = 0;
+
+    for (; tab[i] != NULL && i < 1; i++);
+    for (; tab[i] != NULL && tab[i][0] != 0 && tab[i][1] != 0 && tab[i][1] != '-'; i++);
+    for (; tab[i] != NULL && tab[i][0] != 0 && (tab[i][1] != 0 && tab[i][1] == '-'); i++) {
+        my_printf("%s\n", tab[i]);
+    }
+}
+
 int main(void)
 {
     lemin_t lemin;
@@ -68,14 +80,15 @@ int main(void)
         free(buffer);
         return (84);
     }
+    get_nb_of_ants(&lemin, buffer);
+    my_printf("#number_of_ants\n%d\n", lemin.nb_of_ants);
     lemin.tab = my_str_to_word_array(buffer, '\n');
+    print_tunnels(lemin.tab);
     for (int a = 0; lemin.tab[a]; a++) {
         if (my_strlen(lemin.tab[a]) > 1 && lemin.tab[a][0] == '#' && lemin.tab[a][1] != '#')
             lemin.tab[a][0] = '\0';
     }
     create_rooms(lemin.tab, head);
-    get_nb_of_ants(&lemin, buffer);
-    my_printf("#number_of_ants\n%d\n", lemin.nb_of_ants);
     my_free(&lemin, buffer);
     // find_bigger(&lemin);
     // start(&lemin);
