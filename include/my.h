@@ -33,7 +33,7 @@ char *my_check(char **tunnels, char *string);
 void get_nb_of_ants(lemin_t *lemin, char *string);
 void add_node_at_back(char *line, node_t **node);
 void my_free(lemin_t *lemin, char *str);
-void create_rooms(char **tab, node_t *head);
+node_t *create_rooms(char **tab, node_t *head);
 node_t *get_room(node_t *head, char *to_find);
 int tab_len(char **tab);
 int parser(lemin_t *lemin, char *str);

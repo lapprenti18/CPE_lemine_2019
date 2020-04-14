@@ -73,10 +73,11 @@ int main(void)
         if (my_strlen(lemin.tab[a]) > 1 && lemin.tab[a][0] == '#' && lemin.tab[a][1] != '#')
             lemin.tab[a][0] = '\0';
     }
-    create_rooms(lemin.tab, head);
+    head = create_rooms(lemin.tab, head);
     get_nb_of_ants(&lemin, buffer);
     my_printf("#number_of_ants\n%d\n", lemin.nb_of_ants);
     my_free(&lemin, buffer);
+    print_rooms(head);
     // find_bigger(&lemin);
     // start(&lemin);
     // my_free(&lemin, buffer);

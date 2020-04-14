@@ -7,17 +7,21 @@
 
 #include "../include/my.h"
 
-void create_rooms(char **tab, node_t *head)
+node_t *create_rooms(char **tab, node_t *head)
 {
     node_t *tmp = head;
     char *s = NULL;
 
     for (int i = 0; tab[i]; i += 1) {
         if (tab_len(my_str_to_word_array(tab[i], ' ')) == 3) {
-            if (i > 0 && my_strcmp(tab[i - 1], "##start") == 0)
+            if (i > 0 && my_strcmp(tab[i - 1], "##start") == 0) {
                 add_node_at_back(tab[i], &head->start);
-            else if (i > 0 && my_strcmp(tab[i - 1], "##end") == 0)
+                add_node_at_back(tab[i], &head->next);
+            }
+            else if (i > 0 && my_strcmp(tab[i - 1], "##end") == 0) {
                 add_node_at_back(tab[i], &head->end);
+                add_node_at_back(tab[i], &head->next);
+            }
             else
                 add_node_at_back(tab[i], &head);
         }
@@ -30,6 +34,7 @@ void create_rooms(char **tab, node_t *head)
         add_neighbour(&head->start->neighbourg, s);
     while ((s = my_check(tab, head->end->name)))
         add_neighbour(&head->end->neighbourg, s);
+    return (head);
 }
 
 node_t *get_room(node_t *head, char *to_find)
@@ -38,4 +43,16 @@ node_t *get_room(node_t *head, char *to_find)
         if (my_strcmp(tmp->name, to_find) == 0)
             return (tmp);
     return (NULL);
+}
+
+void print_rooms(node_t *head)
+{
+    my_printf("#rooms\n");
+    for (node_t *cp = head; cp; cp = cp->next) {
+        if (my_strcmp(cp->name, head->start->name) == 0)
+            my_printf("##start\n");
+        if (my_strcmp(cp->name, head->end->name) == 0)
+            my_printf("##end\n");
+        my_printf("%s %d %d\n", cp->name, cp->x, cp->y);
+    }
 }
