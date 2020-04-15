@@ -122,6 +122,7 @@ int main(void)
     }
     way = find_path(start, way);
     moves = my_str_to_word_array(way, '\n');
+    moves = rev_array(moves);
     for (int i = 0; moves[i]; i += 1)
         printf("%s\n", moves[i]);
     my_free(&lemin, buffer);
