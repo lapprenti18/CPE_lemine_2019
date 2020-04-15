@@ -35,4 +35,12 @@ typedef struct lemin_s
     int nb_of_ants;
 } lemin_t;
 
+typedef struct ant_s
+{
+    int name;
+    int current_pos;
+    struct ant_s *next;
+    struct ant_s *previous;
+} ant_t;
+
 #endif /* !STRUCT_H_ */
