@@ -43,13 +43,3 @@ void add_node_at_back(char *line, node_t **node)
     }
     tmp->next = new;
 }
-
-// void delete_node(node_t **node, node_t *pointer)
-// {
-//     if (*node == NULL || pointer == NULL)
-//         return;
-//     if (*node == pointer) {
-//         *node = pointer->next;
-//     }
-//     free(pointer);
-// }

@@ -26,10 +26,6 @@ int check_error(char *str)
 {
     if (str == NULL)
         return (1);
-    // for (int i = 0; str[i] && str[i] != '\n'; i++) {
-    //     if (str[i] < '0' || str[i] > '9')
-    //         return (1);
-    // }
     return (0);
 }
 
@@ -60,7 +56,6 @@ int find_bigger(lemin_t *lemin)
         if (my_getnbr(lemin->tab[i]) > max)
             max = my_getnbr(lemin->tab[i]);
     }
-    // printf("\n%d\n", max);
     return (max);
 }
 
@@ -128,7 +123,7 @@ int main(void)
     way = my_strcat(my_strcat(start->name, "\n"), way);
     moves = my_str_to_word_array(way, '\n');
     moves = rev_array(moves);
-    mouve_ant(lemin.nb_of_ants, moves);
+    mouve_ant(lemin.nb_of_ants, moves, 0);
     my_free(&lemin, buffer);
     return (0);
 }
