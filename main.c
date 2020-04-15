@@ -26,6 +26,11 @@ int check_error(char *str)
 {
     if (str == NULL)
         return (1);
+
+    for (int i = 0; str[i] && str[i] != '\n'; i++) {
+        if (str[i] < '0' || str[i] > '9')
+            return (1);
+    }
     return (0);
 }
 
