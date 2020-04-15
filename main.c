@@ -55,14 +55,16 @@ void print_tunnels(char *tab[])
     }
 }
 
-void find_path(node_t *head)
+char *find_path(node_t *head, char *way)
 {
     for (neigh_t *neigh = head->neighbourg; neigh; neigh = neigh->next) {
         if (neigh->node->distance == head->distance - 1) {
-            printf("%s\n", neigh->node->name);
-            return (find_path(neigh->node));
+            way = my_strcat(way, neigh->node->name);
+            way = my_strcat(way, "\n");
+            return (find_path(neigh->node, way));
         }
     }
+    return (way);
 }
 
 int main(void)
@@ -71,6 +73,8 @@ int main(void)
     char *buffer = get_file();
     node_t *head = NULL;
     node_t *start = NULL;
+    char *way = NULL;
+    char **moves = NULL;
 
     if (check_error(buffer) == 1) {
         free(buffer);
@@ -93,7 +97,10 @@ int main(void)
         for (char *s = NULL; s = my_check(lemin.tab, tmp->name);)
             add_neighbour(&tmp->neighbourg, get_room(head, s));
     }
-    find_path(start);
+    way = find_path(start, way);
+    moves = my_str_to_word_array(way, '\n');
+    for (int i = 0; moves[i]; i += 1)
+        printf("%s\n", moves[i]);
     my_free(&lemin, buffer);
     return (0);
 }

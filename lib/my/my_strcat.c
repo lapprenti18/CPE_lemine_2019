@@ -10,8 +10,8 @@
 
 char *my_strcat(char *start, char *line)
 {
-    int length_start = my_strlen(start);
-    int length_line = my_strlen(line);
+    int length_start = (line) ? my_strlen(start) : 0;
+    int length_line = (line) ? my_strlen(line) : 0;
     char *reslt = NULL;
     int a = 0;
 
