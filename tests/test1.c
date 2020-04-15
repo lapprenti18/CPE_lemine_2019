@@ -9,4 +9,7 @@
 #include <criterion/criterion.h>
 #include <criterion/redirect.h>
 
-Test ()
+Test (zebi, la_mouche)
+{
+    int i = 0;
+}

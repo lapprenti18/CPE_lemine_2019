@@ -26,12 +26,30 @@ int check_error(char *str)
 {
     if (str == NULL)
         return (1);
-
-    for (int i = 0; str[i] && str[i] != '\n'; i++) {
-        if (str[i] < '0' || str[i] > '9')
-            return (1);
-    }
+    // for (int i = 0; str[i] && str[i] != '\n'; i++) {
+    //     if (str[i] < '0' || str[i] > '9')
+    //         return (1);
+    // }
     return (0);
+}
+
+char **rev_array(char *tab[])
+{
+    int i = 0;
+    int j = 0;
+    char *tmp = NULL;
+
+    for (; tab[i]; i++);
+    i--;
+
+    while (j < i) {
+        tmp = tab[i];
+        tab[i] = tab[j];
+        tab[j] = tmp;
+        i--;
+        j++;
+    }
+    return (tab);
 }
 
 int find_bigger(lemin_t *lemin)

@@ -18,9 +18,9 @@ char *my_revstr(char *str)
     length = j;
     j--;
     while (i < j) {
-        temporary = str [i];
-        str [i] = str [j];
-        str [j] = temporary;
+        temporary = str[i];
+        str[i] = str[j];
+        str[j] = temporary;
         i++;
         j--;
     }
