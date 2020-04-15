@@ -34,11 +34,14 @@ char *my_check(char **tunnels, char *string)
 
 void get_nb_of_ants(lemin_t *lemin, char *string)
 {
-    char *tmp = malloc(sizeof(char) *5);
+    char *tmp = malloc(sizeof(char) * 15);
     int j = 0;
+    int i = 0;
 
-    for (int i = 0; string[i] != 0 && string[i] != '\n'; i++) {
-        if (string[i] >= '0' && string[i] <= '9') {
+    for (; string[i] && string[i] != '\n'; i++) {
+        if (string[i] == '#') {
+            for (; string[i] != '\n'; i++);
+        } else if (string[i] >= '0' && string[i] <= '9') {
             tmp[j] = string[i];
             j++;
         }
@@ -46,6 +49,31 @@ void get_nb_of_ants(lemin_t *lemin, char *string)
     tmp[j] = 0;
     lemin->nb_of_ants = my_getnbr(tmp);
     free(tmp);
+}
+
+int array_length(char *tab[])
+{
+    int len = 0;
+
+    for (; tab[len]; len++);
+
+    return (len);
+}
+
+void get_nb_ants(lemin_t *lemin, char *tab[])
+{
+    char *tmp = malloc(sizeof(char) * 15);
+    int i = 0;
+
+    for (; tab[i]; i++) {
+        if (tab[i][0] != 0 && tab[i][0] == '#')
+            continue;
+    }
+    if (i == array_length(tab)) {
+        get_nb_of_ants(lemin, tab[0]);
+    } else {
+        get_nb_of_ants(lemin, tab[i - 1]);
+    }
 }
 
 int parser(lemin_t *lemin, char *str)
