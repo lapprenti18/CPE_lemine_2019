@@ -26,8 +26,8 @@ char *my_check(char **tunnels, char *string)
             return (nb2);
         }
         else if (my_strcmp(string, nb2) == 0) {
-            if (my_strcmp(string, "1") == 0)
-                printf("%s, %d\n", tunnels[i], i);
+            // if (my_strcmp(string, "1") == 0)
+                // printf("%s, %d\n", tunnels[i], i);
             return (nb1);
         }
     }
