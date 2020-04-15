@@ -121,10 +121,13 @@ int main(void)
             add_neighbour(&tmp->neighbourg, get_room(head, s));
     }
     way = find_path(start, way);
+    for (neigh_t *tmp = start->neighbourg; tmp; tmp = tmp->next) {
+        if (tmp->node->distance == head->distance - 1)
+            way = my_strcat(my_strcat(tmp->node->name, "\n"), way);
+    }
+    way = my_strcat(my_strcat(start->name, "\n"), way);
     moves = my_str_to_word_array(way, '\n');
     moves = rev_array(moves);
-    // for (int i = 0; moves[i]; i += 1)
-    //     printf("test %s\n", moves[i]);
     mouve_ant(lemin.nb_of_ants, moves);
     my_free(&lemin, buffer);
     return (0);
