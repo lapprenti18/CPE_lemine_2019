@@ -61,6 +61,9 @@ void print_rooms(node_t *head)
 {
     my_printf("#rooms\n");
     for (node_t *cp = head; cp; cp = cp->next) {
+        printf("%s\n", cp->name);//debug1
+        printf("%s\n", head->start->name);//debug2
+        printf("\n\n");//debug3
         if (my_strcmp(cp->name, head->start->name) == 0)
             my_printf("##start\n");
         if (my_strcmp(cp->name, head->end->name) == 0)
