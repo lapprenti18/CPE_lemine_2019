@@ -64,8 +64,7 @@ void print_tunnels(char *tab[])
     int i = 0;
 
     my_printf("#tunnels\n");
-    for (; tab[i] != NULL && i < 1; i++);
-    for (; tab[i] != NULL && tab[i][0] != 0 && tab[i][1] != 0 && tab[i][1] != '-'; i++);
+    for (; tab[i] && tab_len(my_str_to_word_array(tab[i], '-')) != 2; i += 1);
     for (; tab[i] != NULL; i++) {
         if (!tab[i][0] || tab[i][0] == '#')
             continue;
@@ -85,6 +84,25 @@ char *find_path(node_t *head, char *way)
     return (way);
 }
 
+char **clean_tab(char **tab)
+{
+    int stock = 0;
+    for (int i = 0; tab[i]; i += 1) {
+        stock = 0;
+        for (int j = 0; tab[i][j]; j += 1) {
+            if (tab[i][j] != ' ' && tab[i][j] != '#')
+                stock = j + 1;
+            if (j > 1 && tab[i][j] == '#')
+                tab[i][(tab[i][j - 1] == ' ') ? stock : j] = 0;
+        }
+    }
+    for (int a = 0; tab[a]; a++) {
+        if (my_strlen(tab[a]) > 1 && tab[a][0] == '#' && tab[a][1] != '#')
+            tab[a][0] = '\0';
+    }
+    return (tab);
+}
+
 int main(void)
 {
     lemin_t lemin;
@@ -102,14 +120,10 @@ int main(void)
     if (lemin.nb_of_ants == 0)
         return (84);
     my_printf("#number_of_ants\n%d\n", lemin.nb_of_ants);
-    lemin.tab = my_str_to_word_array(buffer, '\n');
-    for (int a = 0; lemin.tab[a]; a++) {
-        if (my_strlen(lemin.tab[a]) > 1 && lemin.tab[a][0] == '#' && lemin.tab[a][1] != '#')
-            lemin.tab[a][0] = '\0';
-    }
+    lemin.tab = clean_tab(my_str_to_word_array(buffer, '\n'));
     head = create_rooms(lemin.tab, head);
     print_rooms(head);
-    print_tunnels(my_str_to_word_array(buffer, '\n'));
+    print_tunnels(lemin.tab);
     start = get_room(head, head->start->name);
     fill_neigh(&start, 0);
     start = get_room(head, head->end->name);
