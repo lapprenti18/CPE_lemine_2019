@@ -39,11 +39,6 @@ int tab_len(char **tab);
 int parser(lemin_t *lemin, char *str);
 void fill_neigh(node_t **head, int distance);
 void print_rooms(node_t *head);
-<<<<<<< HEAD
 void mouve_ant(int nb_of_ants, char **tab, int temp);
-=======
-void mouve_ant(int nb_of_ants, char **tab);
-void get_nb_ants(lemin_t *lemin, char *tab[]);
->>>>>>> e19a1bc268bdbcad9c648b7d02de7127f3d0c530
 
 #endif /* !MY_H_ */
