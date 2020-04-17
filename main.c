@@ -63,14 +63,19 @@ int print_tunnels(char *tab[], node_t *head)
 {
     int i = 0;
     char **tmp = NULL;
+    int minus = 0;
 
     my_printf("#tunnels\n");
     for (; tab[i] && tab_len(my_str_to_word_array(tab[i], '-')) != 2; i += 1);
     for (; tab[i] != NULL; i++) {
+        minus = 0;
         if (!tab[i][0] || tab[i][0] == '#')
             continue;
+        for (int j = 0; tab[i][j]; j += 1)
+            if (tab[i][j] == '-')
+                minus += 1;
         tmp = my_str_to_word_array(tab[i], '-');
-        if (!get_room(head, tmp[0]) || !get_room(head, tmp[1]))
+        if (minus != 1 || !get_room(head, tmp[0]) || !get_room(head, tmp[1]))
             return (0);
         my_printf("%s\n", tab[i]);
     }
@@ -218,10 +223,9 @@ int main(void)
     way = find_path(start, way);
     if (get_room(head, head->end->name)->distance == __INT_MAX__)
         return(84);
-    for (neigh_t *tmp = start->neighbourg; tmp; tmp = tmp->next) {
+    for (neigh_t *tmp = start->neighbourg; tmp; tmp = tmp->next)
         if (tmp->node->distance == head->distance - 1)
             way = my_strcat(my_strcat(tmp->node->name, "\n"), way);
-    }
     way = my_strcat(my_strcat(start->name, "\n"), way);
     moves = my_str_to_word_array(way, '\n');
     moves = rev_array(moves);
