@@ -71,7 +71,7 @@ void print_rooms(node_t *head)
 
 void fill_neigh(node_t **head, int distance)
 {
-    static int i = 0;
+    // static int i = 0;
     node_t *node = *head;
 
     node->distance = distance;

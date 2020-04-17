@@ -137,6 +137,7 @@ int main(void)
     get_nb_of_ants(&lemin, buffer);
     if (lemin.nb_of_ants <= 0)
         return (84);
+
     my_printf("#number_of_ants\n%d\n", lemin.nb_of_ants);
     lemin.tab = clean_tab(my_str_to_word_array(buffer, '\n'));
 
@@ -154,7 +155,7 @@ int main(void)
 
     start = get_room(head, head->end->name);
     for (node_t *tmp = head; tmp; tmp = tmp->next) {
-        for (char *s = NULL; s = my_check(lemin.tab, tmp->name);)
+        for (char *s = NULL; (s = my_check(lemin.tab, tmp->name));)
             add_neighbour(&tmp->neighbourg, get_room(head, s));
     }
     way = find_path(start, way);

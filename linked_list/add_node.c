@@ -10,7 +10,7 @@
 void add_node_at_front(int value, node_t **node)
 {
     node_t *new = malloc(sizeof(node_t));
-
+    (void)value;
 
     if (*node == NULL) {
         new->next = NULL;
