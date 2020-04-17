@@ -122,13 +122,20 @@ char **clean_tab(char **tab)
 int is_valid2(char *tab[])
 {
     int i = 0;
+    int k = -5;
     int valid = 0;
     int valid2 = 0;
 
     for (; tab[i]; i++) {
         if (my_strcmp(tab[i], "##start") == 0) {
-            valid +=1;
+            if (k == i - 1)
+                return (1);
+            k = i;
+            valid += 1;
         } else if (my_strcmp(tab[i], "##end") == 0) {
+            if (k == i -1)
+                return (1);
+            k = i;
             valid2 += 1;
         }
     }
@@ -151,9 +158,8 @@ int check_line(char *str)
 int is_valid3(char *tab[])
 {
     for (int i = 0; tab[i]; i++) {
-        if (check_line(tab[i]) == 1) {
+        if (check_line(tab[i]) == 1)
             return (1);
-        }
     }
     return (0);
 }

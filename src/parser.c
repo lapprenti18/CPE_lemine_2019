@@ -32,18 +32,8 @@ char *my_check(char **tunnels, char *string)
     return (NULL);
 }
 
-void get_nb_of_ants(lemin_t *lemin, char *string)
+char *nb_ants(char *string, int i, int j, char *tmp)
 {
-    char *tmp = malloc(sizeof(char) * 15);
-    int j = 0;
-    int i = 1;
-
-    if ((string[0] >= '0' && string[0] <= '9') || string[0] == '-') {
-        tmp[j++] = string[0];
-    } else if (string[0] == '#') {
-        for (; string[i] != '\n'; i++);
-    }
-    i += 1;
     for (; string[i] && string[i] != '\n'; i++) {
         if (string[i] == '#' && string[i - 1] == '\n') {
             for (; string[i] != '\n'; i++);
@@ -52,6 +42,28 @@ void get_nb_of_ants(lemin_t *lemin, char *string)
         }
     }
     tmp[j] = 0;
+    return (tmp);
+}
+
+void get_nb_of_ants(lemin_t *lemin, char *string)
+{
+    char *tmp = malloc(sizeof(char) * 15);
+    int j = 0;
+    int i = 0;
+
+    if ((string[0] >= '0' && string[0] <= '9') || string[0] == '-') {
+        tmp[j++] = string[0];
+        if (string[1] && string[1] == '\n') {
+            tmp[j] = 0;
+            lemin->nb_of_ants = my_getnbr(tmp);
+            free(tmp);
+            return;
+        }
+    } else if (string[0] == '#') {
+        for (; string[i] && string[i] != '\n'; i++);
+    }
+    i += 1;
+    tmp = nb_ants(string, i, j, tmp);
     lemin->nb_of_ants = my_getnbr(tmp);
     free(tmp);
 }

@@ -111,7 +111,7 @@ void mouve_ant(int nb_of_ants, char **tab, int temp)
         add_ant_at_front((temp - nb_of_ants + 1) * -1, 0, &ant);
     cp = ant;
     my_printf("#moves\n");
-    if (tab_lenght == 2)
+    if (tab_lenght == 1)
         return (start_to_end(nb_of_ants, tab));
     nb_of_ants == 1 ? move_one(tab) : 0;
     for (;check_finish(tab_lenght, cp) != 1 && nb_of_ants != 1;)
