@@ -59,17 +59,22 @@ int find_bigger(lemin_t *lemin)
     return (max);
 }
 
-void print_tunnels(char *tab[])
+int print_tunnels(char *tab[], node_t *head)
 {
     int i = 0;
+    char **tmp = NULL;
 
     my_printf("#tunnels\n");
     for (; tab[i] && tab_len(my_str_to_word_array(tab[i], '-')) != 2; i += 1);
     for (; tab[i] != NULL; i++) {
         if (!tab[i][0] || tab[i][0] == '#')
             continue;
+        tmp = my_str_to_word_array(tab[i], '-');
+        if (!get_room(head, tmp[0]) || !get_room(head, tmp[1]))
+            return (0);
         my_printf("%s\n", tab[i]);
     }
+    return (1);
 }
 
 char *find_path(node_t *head, char *way)
@@ -87,6 +92,9 @@ char *find_path(node_t *head, char *way)
 char **clean_tab(char **tab)
 {
     int stock = 0;
+    int idx = 0;
+    char **tmp = NULL;
+
     for (int i = 0; tab[i]; i += 1) {
         stock = 0;
         for (int j = 0; tab[i][j]; j += 1) {
@@ -99,6 +107,14 @@ char **clean_tab(char **tab)
     for (int a = 0; tab[a]; a++) {
         if (my_strlen(tab[a]) > 1 && tab[a][0] == '#' && tab[a][1] != '#')
             tab[a][0] = '\0';
+    }
+    for (int i = 0; tab[i]; i += 1) {
+        if (tab_len(my_str_to_word_array(tab[i], '-')) == 2)
+            idx = i;
+        if (tab_len(tmp = my_str_to_word_array(tab[i], ' ')) == 3) {
+            if (idx != 0 || !my_str_isnum(tmp[1]) || !my_str_isnum(tmp[2]))
+                return (NULL);
+        }
     }
     return (tab);
 }
@@ -116,7 +132,7 @@ int is_valid2(char *tab[])
             valid2 += 1;
         }
     }
-    if (valid == 0 || valid2 == 0)
+    if (valid != 1 || valid2 != 1)
         return (1);
     return (0);
 }
@@ -171,26 +187,23 @@ int main(void)
         return (84);
 
     my_printf("#number_of_ants\n%d\n", lemin.nb_of_ants);
-    lemin.tab = clean_tab(my_str_to_word_array(buffer, '\n'));
-
-    if (is_valid(lemin.tab) == 1) {
+    if (!(lemin.tab = clean_tab(my_str_to_word_array(buffer, '\n'))) || is_valid(lemin.tab) == 1) {
         return (84);
     }
-
     head = create_rooms(lemin.tab, head);
-
     print_rooms(head);
-    print_tunnels(lemin.tab);
-
+    if (print_tunnels(lemin.tab, head) == 0)
+        return (84);
     start = get_room(head, head->start->name);
     fill_neigh(&start, 0);
-
     start = get_room(head, head->end->name);
     for (node_t *tmp = head; tmp; tmp = tmp->next) {
         for (char *s = NULL; (s = my_check(lemin.tab, tmp->name));)
             add_neighbour(&tmp->neighbourg, get_room(head, s));
     }
     way = find_path(start, way);
+    if (get_room(head, head->end->name)->distance == __INT_MAX__)
+        return(84);
     for (neigh_t *tmp = start->neighbourg; tmp; tmp = tmp->next) {
         if (tmp->node->distance == head->distance - 1)
             way = my_strcat(my_strcat(tmp->node->name, "\n"), way);

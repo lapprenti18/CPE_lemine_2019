@@ -41,5 +41,6 @@ void fill_neigh(node_t **head, int distance);
 void print_rooms(node_t *head);
 void mouve_ant(int nb_of_ants, char **tab, int temp);
 void add_neighbour(neigh_t **head, node_t *node);
+int	my_str_isnum(char const *str);
 
 #endif /* !MY_H_ */
