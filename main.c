@@ -103,21 +103,53 @@ char **clean_tab(char **tab)
     return (tab);
 }
 
-int is_valid(char *tab[])
+int is_valid2(char *tab[])
 {
     int i = 0;
     int valid = 0;
     int valid2 = 0;
 
     for (; tab[i]; i++) {
-        if (my_strcmp("##start", tab[i]) == 0) {
+        if (my_strcmp(tab[i], "##start") == 0) {
             valid +=1;
-        } else if (my_strcmp("##end", tab[i]) == 0) {
+        } else if (my_strcmp(tab[i], "##end") == 0) {
             valid2 += 1;
         }
     }
     if (valid == 0 || valid2 == 0)
         return (1);
+    return (0);
+}
+
+int check_line(char *str)
+{
+    int nb_hashtag = 0;
+
+    for (int i = 0; str[i]; i++) {
+        if (str[i] == '#')
+            nb_hashtag++;
+    }
+    return (0);
+}
+
+int is_valid3(char *tab[])
+{
+    for (int i = 0; tab[i]; i++) {
+        if (check_line(tab[i]) == 1) {
+            return (1);
+        }
+    }
+    return (0);
+}
+
+int is_valid(char *tab[])
+{
+    if (is_valid2(tab) == 1) {
+        return (1);
+    }
+    if (is_valid3(tab) == 1) {
+        return (1);
+    }
     return (0);
 }
 
