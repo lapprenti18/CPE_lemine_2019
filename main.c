@@ -103,6 +103,24 @@ char **clean_tab(char **tab)
     return (tab);
 }
 
+int is_valid(char *tab[])
+{
+    int i = 0;
+    int valid = 0;
+    int valid2 = 0;
+
+    for (; tab[i]; i++) {
+        if (my_strcmp("##start", tab[i]) == 0) {
+            valid +=1;
+        } else if (my_strcmp("##end", tab[i]) == 0) {
+            valid2 += 1;
+        }
+    }
+    if (valid == 0 || valid2 == 0)
+        return (1);
+    return (0);
+}
+
 int main(void)
 {
     lemin_t lemin;
@@ -117,15 +135,23 @@ int main(void)
         return (84);
     }
     get_nb_of_ants(&lemin, buffer);
-    if (lemin.nb_of_ants == 0)
+    if (lemin.nb_of_ants <= 0)
         return (84);
     my_printf("#number_of_ants\n%d\n", lemin.nb_of_ants);
     lemin.tab = clean_tab(my_str_to_word_array(buffer, '\n'));
+
+    if (is_valid(lemin.tab) == 1) {
+        return (84);
+    }
+
     head = create_rooms(lemin.tab, head);
+
     print_rooms(head);
     print_tunnels(lemin.tab);
+
     start = get_room(head, head->start->name);
     fill_neigh(&start, 0);
+
     start = get_room(head, head->end->name);
     for (node_t *tmp = head; tmp; tmp = tmp->next) {
         for (char *s = NULL; s = my_check(lemin.tab, tmp->name);)
