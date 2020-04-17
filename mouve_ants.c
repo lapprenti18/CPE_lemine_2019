@@ -48,7 +48,8 @@ int check_finish(int tab_lenght, ant_t *cp)
 
 void move_one(char **tab)
 {
-    my_printf("P1-%s\n", tab[0]);
+    for (int temp = 0; tab[temp]; temp++)
+        my_printf("P1-%s\n", tab[temp]);
 }
 
 int print_move(int test, ant_t *cp, char **tab)
@@ -91,6 +92,13 @@ void move(ant_t *cp, char **tab, int temp, int tab_lenght)
     cp->current_pos == temp - 1))
         test = print_move(test, cp, tab);
     for (; cp->previous; cp = cp->previous);
+    my_printf("\n");
+}
+
+void start_to_end(int nb_of_ants, char **tab)
+{
+    for (int temp = 0; temp < nb_of_ants; temp++)
+        my_printf("P%d-%s\n", temp + 1, tab[1]);
 }
 
 void mouve_ant(int nb_of_ants, char **tab, int temp)
@@ -103,9 +111,9 @@ void mouve_ant(int nb_of_ants, char **tab, int temp)
         add_ant_at_front((temp - nb_of_ants + 1) * -1, 0, &ant);
     cp = ant;
     my_printf("#moves\n");
+    if (tab_lenght == 2)
+        return (start_to_end(nb_of_ants, tab));
     nb_of_ants == 1 ? move_one(tab) : 0;
-    for (;check_finish(tab_lenght, cp) != 1 && nb_of_ants != 1;) {
+    for (;check_finish(tab_lenght, cp) != 1 && nb_of_ants != 1;)
         move(cp, tab, temp, tab_lenght);
-        my_printf("\n");
-    }
 }
