@@ -11,7 +11,8 @@ SRC	=	main.c 					\
 		src/free.c				\
 		src/room.c				\
 		src/my_tablength.c		\
-		mouve_ants.c				\
+		mouve_ants.c			\
+		print_ant.c
 
 LIB = 	$(wildcard lib/my/*.c)
 

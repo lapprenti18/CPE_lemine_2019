@@ -42,5 +42,13 @@ void print_rooms(node_t *head);
 void mouve_ant(int nb_of_ants, char **tab, int temp);
 void add_neighbour(neigh_t **head, node_t *node);
 int	my_str_isnum(char const *str);
+void add_ant_at_front(int nb, int start, ant_t **node);
+int my_tab_lenght(char **tab);
+int check_finish(int tab_lenght, ant_t *cp);
+void move_one(char **tab);
+int print_move(int test, ant_t *cp, char **tab);
+int last_moves(ant_t *cp);
+void move(ant_t *cp, char **tab, int temp, int tab_lenght);
+void start_to_end(int nb_of_ants, char **tab);
 
 #endif /* !MY_H_ */

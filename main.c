@@ -225,7 +225,7 @@ int main(void)
     }
     way = find_path(start, way);
     if (get_room(head, head->end->name)->distance == __INT_MAX__)
-        return(84);
+        return (84);
     for (neigh_t *tmp = start->neighbourg; tmp; tmp = tmp->next)
         if (tmp->node->distance == head->distance - 1)
             way = my_strcat(my_strcat(tmp->node->name, "\n"), way);
