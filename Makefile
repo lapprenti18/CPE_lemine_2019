@@ -11,6 +11,9 @@ SRC	=	main.c 					\
 		src/free.c				\
 		src/room.c				\
 		src/my_tablength.c		\
+		src/is_valid.c			\
+		src/tunnels.c			\
+		src/get_file_bigger.c	\
 		mouve_ants.c			\
 		print_ant.c
 

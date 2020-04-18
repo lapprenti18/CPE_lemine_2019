@@ -26,6 +26,7 @@ int my_put_nbr(int nb);
 int my_strlen(char const *str);
 void my_printf(char *str, ...);
 int my_getnbr(char const *str);
+char **rev_array(char *tab[]);
 int my_strcmp(char const *s1, char const *s2);
 void add_node_at_front(int value, node_t **node);
 void add_node_at_back(char *line, node_t **node);
@@ -50,5 +51,11 @@ int print_move(int test, ant_t *cp, char **tab);
 int last_moves(ant_t *cp);
 void move(ant_t *cp, char **tab, int temp, int tab_lenght);
 void start_to_end(int nb_of_ants, char **tab);
+int is_valid(char *tab[]);
+int check_error(char *str);
+int find_bigger(lemin_t *lemin);
+char *get_file(void);
+int print_tunnels(char *tab[], node_t *head);
+char *find_path(node_t *head, char *way);
 
 #endif /* !MY_H_ */

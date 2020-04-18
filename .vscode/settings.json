@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "my.h": "c"
+        "my.h": "c",
+        "struct.h": "c"
     }
 }
