@@ -120,8 +120,11 @@ char **clean_tab(char **tab)
             break;
         }
     for (; tab[i]; i += 1) {
-        if (tab_len(my_str_to_word_array(tab[i], '-')) == 2)
+        if (tab_len(tmp = my_str_to_word_array(tab[i], '-')) == 2) {
+            if (my_strcmp(tmp[0], tmp[1]) == 0)
+                return (NULL);
             idx = i;
+        }
         if (idx == 0 && tab[i][0] && tab[i][0] != '#' &&
         tab_len(my_str_to_word_array(tab[i], ' ')) != 3)
             return (NULL);
