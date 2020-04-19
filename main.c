@@ -8,48 +8,6 @@
 #include "include/my.h"
 #include "include/struct.h"
 
-char **clean_tab(char **tab)
-{
-    int stock = 0;
-    int idx = 0;
-    int i = 0;
-    char **tmp = NULL;
-
-    for (int i = 0; tab[i]; i += 1) {
-        stock = 0;
-        for (int j = 0; tab[i][j]; j += 1) {
-            if (tab[i][j] != ' ' && tab[i][j] != '#')
-                stock = j + 1;
-            if (j > 1 && tab[i][j] == '#')
-                tab[i][(tab[i][j - 1] == ' ') ? stock : j] = 0;
-        }
-    }
-    for (int a = 0; tab[a]; a++) {
-        if (my_strlen(tab[a]) > 1 && tab[a][0] == '#' && tab[a][1] != '#')
-            tab[a][0] = '\0';
-    }
-    for (; tab[i]; i += 1) {
-        if (tab[i][0] && my_str_isnum(tab[i])) {
-            i += 1;
-            break;
-        }
-    }
-    for (; tab[i]; i += 1) {
-        if (tab_len(tmp = my_str_to_word_array(tab[i], '-')) == 2) {
-            if (my_strcmp(tmp[0], tmp[1]) == 0)
-                return (NULL);
-            idx = i;
-        }
-        if (idx == 0 && tab[i][0] && tab[i][0] != '#' &&
-        tab_len(my_str_to_word_array(tab[i], ' ')) != 3)
-            return (NULL);
-        if (tab_len(tmp = my_str_to_word_array(tab[i], ' ')) == 3)
-            if (idx != 0 || !my_str_isnum(tmp[1]) || !my_str_isnum(tmp[2]))
-                return (NULL);
-    }
-    return (tab);
-}
-
 void play_moves(lemin_t *lemin, char *way)
 {
     char **moves = NULL;

@@ -15,7 +15,8 @@ SRC	=	main.c 					\
 		src/tunnels.c			\
 		src/get_file_bigger.c	\
 		mouve_ants.c			\
-		print_ant.c
+		print_ant.c				\
+		src/clean_tab.c			\
 
 LIB = 	$(wildcard lib/my/*.c)
 

@@ -57,5 +57,6 @@ int find_bigger(lemin_t *lemin);
 char *get_file(void);
 int print_tunnels(char *tab[], node_t *head);
 char *find_path(node_t *head, char *way);
+char **clean_tab(char **tab);
 
 #endif /* !MY_H_ */
