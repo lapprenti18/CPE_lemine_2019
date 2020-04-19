@@ -31,7 +31,7 @@ VG	=	-g3
 ERROR	=	-Wall -W -Wextra
 
 all	:
-	gcc -o $(NAME) $(SRC) $(LIB) $(MY_PRINTF) $(ERROR) $(VG)
+	gcc -o $(NAME) $(SRC) $(LIB) $(MY_PRINTF) $(ERROR)
 
 clean	:
 	rm -f *.o $(OBJ)
